@@ -1,4 +1,4 @@
-// Simple SHA-256 hashing function using Web Crypto API
+
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
@@ -6,12 +6,10 @@ async function sha256(message) {
   return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-// Blockchain setup
 let blockchain = [
   { index: 0, timestamp: new Date().toLocaleString(), data: "Genesis Block", previousHash: "0", hash: "GENESIS" }
 ];
 
-// Password strength logic
 function checkPasswordStrength(password) {
   let score = 0;
   if (password.length >= 8) score++;
@@ -23,17 +21,16 @@ function checkPasswordStrength(password) {
   return score;
 }
 
-// Update strength message and progress bar
 function updateStrengthUI(score) {
   const msg = document.getElementById("strengthMsg");
   const bar = document.getElementById("progress");
   const colors = ["#ff4b5c", "#ff914d", "#ffda77", "#9fff8c", "#00c896"];
   const messages = [
-    "Too Weak 😢",
-    "Weak 😕",
-    "Medium 😐",
-    "Strong 💪",
-    "Very Strong 🚀"
+    "Too Weak ",
+    "Weak ",
+    "Medium ",
+    "Strong ",
+    "Very Strong "
   ];
 
   msg.innerText = messages[score - 1] || "Enter a password!";
@@ -41,7 +38,6 @@ function updateStrengthUI(score) {
   bar.style.background = colors[score - 1] || "#ff4b5c";
 }
 
-// Add new block to blockchain
 async function addBlock(password) {
   const latestBlock = blockchain[blockchain.length - 1];
   const hash = await sha256(password);
@@ -56,7 +52,6 @@ async function addBlock(password) {
   renderBlockchain();
 }
 
-// Display blockchain
 function renderBlockchain() {
   const container = document.getElementById("blockchainContainer");
   container.innerHTML = "";
@@ -65,16 +60,27 @@ function renderBlockchain() {
     div.className = "block";
     div.innerHTML = `
       <strong>Block #${block.index}</strong><br>
-      🕒 ${block.timestamp}<br>
-      🔗 Hash: ${block.hash}<br>
-      📦 Data: ${block.data}<br>
-      ⛓ Prev: ${block.previousHash}
+       ${block.timestamp}<br>
+       Hash: ${block.hash}<br>
+       Data: ${block.data}<br>
+       Prev: ${block.previousHash}
     `;
     container.appendChild(div);
   });
 }
 
-// Main
+document.getElementById("togglePassword").addEventListener("click", () => {
+  const input = document.getElementById("passwordInput");
+  const toggleBtn = document.getElementById("togglePassword");
+  if (input.type === "password") {
+    input.type = "text";
+    toggleBtn.textContent = "🕶";
+  } else {
+    input.type = "password";
+    toggleBtn.textContent = "👁";
+  }
+});
+
 document.getElementById("checkBtn").addEventListener("click", async () => {
   const password = document.getElementById("passwordInput").value;
   const score = checkPasswordStrength(password);
@@ -82,7 +88,7 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
 
   if (score === 5) {
     await addBlock(password);
-    document.getElementById("strengthMsg").innerText += " ✅ Added to blockchain!";
+    document.getElementById("strengthMsg").innerText += "  Added to blockchain!";
   }
 });
 
