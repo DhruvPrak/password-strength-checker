@@ -8,11 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>🔐 Password Strength Checker</h1>
+    <h1> Password Strength Checker</h1>
     <p class="subtitle">Check your password strength and see it added to the blockchain!</p>
 
     <div class="card">
-      <input type="password" id="passwordInput" placeholder="Enter your password..." />
+      <div class="input-group">
+        <input type="password" id="passwordInput" placeholder="Enter your password..." />
+        <button id="togglePassword" title="Show/Hide Password">👁</button>
+      </div>
       <button id="checkBtn">Check Strength</button>
       <p id="strengthMsg"></p>
 
@@ -21,12 +24,12 @@
       </div>
     </div>
 
-    <h2>🧱 Blockchain Ledger</h2>
+    <h2> Blockchain Ledger</h2>
     <div id="blockchainContainer"></div>
   </div>
 
   <footer>
-    <p>💡 Developed by <b>Your Name</b> | Blockchain + Cryptography Project</p>
+    <p> Developed by <b>Your Name</b> | Blockchain + Cryptography Project</p>
   </footer>
 
   <script src="script.js"></script>
