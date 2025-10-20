@@ -2,9 +2,6 @@ import hashlib
 import time
 import re
 
-# -------------------------
-# Password Strength Checker
-# -------------------------
 def is_strong_password(password):
     if len(password) < 8:
         return False, "Password too short! Must be at least 8 characters."
@@ -18,14 +15,11 @@ def is_strong_password(password):
         return False, "Password must contain at least one special character."
     return True, "Password is strong!"
 
-# -------------------------
-# Blockchain Implementation
-# -------------------------
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
         self.index = index
         self.timestamp = timestamp
-        self.data = data   # in this case, hashed password
+        self.data = data   
         self.previous_hash = previous_hash
         self.hash = self.calculate_hash()
 
@@ -59,11 +53,8 @@ class Blockchain:
                 return False
         return True
 
-# -------------------------
-# Main Program
-# -------------------------
 if __name__ == "__main__":
-    # Create a blockchain
+    
     password_chain = Blockchain()
 
     while True:
@@ -71,18 +62,14 @@ if __name__ == "__main__":
         if pwd.lower() == "exit":
             break
 
-        # Check password strength
         strong, message = is_strong_password(pwd)
         print(message)
 
         if strong:
-            # Hash password with SHA-256
             hashed_pwd = hashlib.sha256(pwd.encode()).hexdigest()
-            # Add hash to blockchain
             password_chain.add_block(hashed_pwd)
             print("Password hash added to blockchain!")
 
-    # Print Blockchain
     print("\n--- Blockchain Data ---")
     for block in password_chain.chain:
         print(f"Index: {block.index}")
@@ -93,3 +80,4 @@ if __name__ == "__main__":
         print("-" * 50)
 
     print("Blockchain valid?", password_chain.is_chain_valid())
+
